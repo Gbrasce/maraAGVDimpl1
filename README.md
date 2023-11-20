@@ -189,9 +189,8 @@ Lamentablemente no es pan ni de canela, queremos tener un usuario muy poderoso c
 
 ### Adaptando el .Conf de postgresql-12
 - - ```sudo -i```
-
-[sudo] password for datos: ```12345```
-root@ubuntu22mara:~# ```chown 777 /media/sf_Compartido/```
-root@ubuntu22mara:~# ```exit```
+ - - - ```12345```
+ - - - ```chown 777 /media/sf_Compartido/```
+ - - - ```exit```
 
 - -
