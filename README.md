@@ -1,5 +1,8 @@
-# maraAGVDimpl1
-Mara ETL implementation of project one in spanish for educational purposes in Big Data Analytics.
+# OVAs para Virtual Box
+Todos los usuarios de ucaribe.edu.mx tienen acceso automático.
+En lugar hacer toda la guia, pueden descargarlo y ejecutarlo siempre que tengan Virtual Box 7, de igual manera si leen la guia se enteran del chisme.
+
+[20231120-UbDLTS-Mara](https://drive.google.com/file/d/1gt_ndGv_r47WXhbVtKAG91AJNrQKD5G5/view?usp=sharing)
 
 ## Iniciemos...
 
@@ -8,6 +11,7 @@ Mara ETL implementation of project one in spanish for educational purposes in Bi
 [Descargar VBox reciente 7.0.12](https://download.virtualbox.org/virtualbox/7.0.12/VirtualBox-7.0.12-159484-Win.exe)
 
 [Descargar el Oracle VM Vbox Extension Pack 7.0.12](https://download.virtualbox.org/virtualbox/7.0.12/Oracle_VM_VirtualBox_Extension_Pack-7.0.12.vbox-extpack)
+
 
 Instala VBox.
 Ubica tu ISO de UDLTS22.
@@ -183,14 +187,80 @@ Recordartorio solamente, este comando permite entrar al usuario postgres para la
 ### Creando roles de PostgreSQL-12
 Lamentablemente no es pan ni de canela, queremos tener un usuario muy poderoso con acceso a postgres:
 - sudo -u postgres psql postgres
-- CREATE ROLE datos SUPERUSER LOGIN
-- CREATE ROLE root SUPERUSER LOGIN
+- CREATE ROLE datos SUPERUSER LOGIN;
+- CREATE ROLE root SUPERUSER LOGIN;
+
+- NO TE OLVIDES DEL PUNTO y COMA
+- Comprueba que los roles se crearon con;
+- \dgls
+
+
 - para salirnos necesitamos poner \q, que se lee diagonal invertida y la q, y enter.
 
 ### Adaptando el .Conf de postgresql-12
 - - ```sudo -i```
- - - - ```12345```
- - - - ```chown 777 /media/sf_Compartido/```
- - - - ```exit```
 
-- -
+[sudo] password for datos: ```12345```
+root@ubuntu22mara:~# ```chown 777 /media/sf_Compartido/```
+root@ubuntu22mara:~# ```exit```
+
+- - Vamos a tener que usar la ventana de explorador de ubuntu, al menos así descansas un rato de la terminal y pruebas Jammy.
+- - Abre el explorador, está en la barra lateral.
+- - Pícale por la esquina inferior izquierda en Other Locations...
+- - navega por /media y luego a sf_Compartido/
+- - Te va a pedir contraseña: 12345 (la que creamos)
+- - Sin cerrar esta ventana, abre una nueva ventana de explorador.
+- - Navega hasta /etc/postgresql/12/main/
+
+- Debes tener dos ventanas de explorador ahí. Ahora aguanta las carnitas.
+
+- - Abre una terminal y ejecuta el comando:
+- - ```sudo mv /etc/postgresql/12/main/postgresql.conf /etc/postgresql/12/main/postgresql.conf.BAK```
+- - pones la contraseña y ya.
+
+Ya que tengas estas cosas vas a descargar el archivo postgresql.conf que estoy compartiendo en este repositorio.
+- Si gustas te lo puede curlear (jaja) con este comando:
+- ```sudo curl https://raw.githubusercontent.com/Gbrasce/maraAGVDimpl1/main/postgresql.conf -o /etc/postgresql/12/main/postgresql.conf```
+
+- Y ya reinicias el postgres:
+- - ```sudo /etc/init.d/postgresql restart```
+
+## Makeando a Mara
+
+Uff, ahora sí... ya podemos entrarle a Mara.
+
+- - cd git/mara-example-project-1/
+
+- Sí, es más seguro correr lo siguiente uno por uno en este orden.
+sudo apt-get install libxslt-dev
+sudo apt-get install libxml2-dev
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
+sudo apt install cmake
+
+
+# Tema con make
+
+Tras suficientes previsiones con el buildeo de mara-example-project-1
+
+El proyecto tiene tema con el Yankeo de la version de SQLAlchemy-utils
+El proyecto tiene tema con deprecation de funciones de buildeo usando setup.py para crear los Wheels de la instalación pip en tiempo de buildeo.
+
+Esto podemos solucionarlo si le damos mantenimiento al proyecto.
+
+Otra posible solución que no he tenido tiempo de probar es que podemos downgradear todo lo posible nuestras instalaciones de python3 hasta lo minimo recomendado por lo estipulado en los requirements.txt.freeze y requirements.txt, que se encuentran no solo en mara-example-project-1 sino a lo largo de todas las dependencias desconcentradas de los projectos de Mara en distintos repositorios.
+
+La solución requiere tiempo para desmantelar los repositorios de Mara y una de dos, downgradear todo lo posible mientras sea soportado, lo cual requiere conciencia en administracion de paquetes aptitude o la su compilación desde la fuente; o bien dedicar algunas horas de mantenimiento y documentación para integrar software más reciente a Mara, en conjunto con la compatibilidad de código Python 3.13.
+Información hasta ahora recabada en proceso para posible mantenimiento:
+
+https://github.com/carla-simulator/carla/pull/3636
+
+https://github.com/kvesteri/sqlalchemy-utils/issues/462
+
+https://sqlalchemy-utils.readthedocs.io/en/latest/installation.html
+
+https://pypi.org/project/SQLAlchemy-Utils/#history
+
+
+Algo que no me encantó de Mara ETL es que, hemos aprovisionado al sistema con el idioma español, con las consecuencias que esto supone, y que depende mucho tanto de Brew como de postgres 9 al 12.
+Esto ocasiona problemas que debemos resolver antes de makear el proyecto que gitteamos, por lo tanto hay que corregir algunos temas para prevenir un desastre al momento de makear.
+Tampoco me pareció que obviamente no tiene manera de estar alerta de las dependencias de homebrew, con lo cual, el usuario debe tener conocimientos para administrar sus instalaciones paralelas de PostgreSQL-12, con lo cual lo recomendable es buildear postgres desde el codigo fuente.
