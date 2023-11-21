@@ -21,7 +21,7 @@ Instala VBox.
 Ubica tu ISO de UDLTS22.
 Instala el Extension Pack con doble click al archivo.
 
-###Instalando en VBox
+### Instalando en VBox
 - Nueva
 - Crear máquina virtual en modo experto...
 Para propósitos educativos, configuración sugerida...
@@ -30,7 +30,7 @@ Para propósitos educativos, configuración sugerida...
 - Imagen ISO: Buscar el iso de ubuntu 22 descargado.
 - Marcar la casilla omitir instalacion desatendida
 - En hardware:
- - En RAM: 4096MB si es pobible, si no, 3072MB, si no, 2048MB, si no, 1024MB
+ - En RAM: 4096MB si es posible, si no, 3072MB, si no, 2048MB, si no, 1024MB
  - En núcleos de CPU: 2 si es posible.
  - En disco duro: 50GB si es posible.
 - **Terminar**
