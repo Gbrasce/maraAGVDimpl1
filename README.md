@@ -4,6 +4,10 @@ En lugar hacer toda la guia, pueden descargarlo y ejecutarlo siempre que tengan 
 
 [20231120-UbDLTS-Mara](https://drive.google.com/file/d/1gt_ndGv_r47WXhbVtKAG91AJNrQKD5G5/view?usp=sharing)
 
+## Fork de mara para ir modificando los yanks y los deprecated.
+
+https://github.com/Gbrasce/mara-example-project-1
+
 ## Iniciemos...
 
 [Descargar Ubuntu Destop 22.04.3 LTS x64](https://releases.ubuntu.com/jammy/)
